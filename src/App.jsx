@@ -1,6 +1,6 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import React, { useState } from "react";
+import PersonalInfoForm from "./components/personalInfoForm";
+import EducationInfoForm from "./components/educationInfoForm";
 import "./App.css";
 
 function App() {
@@ -12,12 +12,10 @@ function App() {
   });
   const [isVisible, setVisibility] = useState(false);
 
-  // Event handler to update person's name
   const handleNameChange = (e) => {
     setPerson({ ...person, name: e.target.value });
   };
 
-  // Event handler to update person's last name
   const handleLastNameChange = (e) => {
     setPerson({ ...person, lastName: e.target.value });
   };
@@ -25,13 +23,11 @@ function App() {
   const handleBirthChange = (e) => {
     setPerson({ ...person, birth: e.target.value });
   };
-  let fullname = person.name + " " + person.lastName;
 
   const handleSchoolChange = (e) => {
     setEducation({ ...education, school: e.target.value });
   };
 
-  // Event handler to update person's last name
   const handleSubjectChange = (e) => {
     setEducation({ ...education, subject: e.target.value });
   };
@@ -42,96 +38,43 @@ function App() {
 
   const handleVisibilityChange = () => {
     setVisibility(!isVisible);
-    console.log(isVisible);
   };
+
+  let fullname = person.name + " " + person.lastName;
 
   return (
     <>
-    <div class="content">
-      <div class="left">
-        <button onClick={handleVisibilityChange}>
-          {isVisible ? "hide information" : "edit information"}
-        </button>
+      <div className="content">
+        <div className="left">
+          <button onClick={handleVisibilityChange}>
+            {isVisible ? "hide information" : "edit information"}
+          </button>
           {isVisible && (
-        <div class="formBlock">
-            <h3>Persönliche Informationen</h3>
-            <form className="formi">
-              <div>
-                <label for="Vorname">Vorname</label>
-                <input
-                  type="text"
-                  value={person.name}
-                  onChange={handleNameChange}
-                  id="Vorname"
-                />
-              </div>
-              <div>
-                <label for="Nachname">Nachname</label>
-                <input
-                  type="text"
-                  value={person.lastName}
-                  onChange={handleLastNameChange}
-                  id="Nachname"
-                />
-              </div>
-              <div>
-                <label for="Birth">Birthday</label>
-                <input
-                  type="text"
-                  value={person.birth}
-                  onChange={handleBirthChange}
-                  id="Birth"
-                />
-              </div>
-            </form>
-        </div>
+            <PersonalInfoForm
+              person={person}
+              handleNameChange={handleNameChange}
+              handleLastNameChange={handleLastNameChange}
+              handleBirthChange={handleBirthChange}
+            />
           )}
-
           {isVisible && (
-        <div class="formBlock">
-          <h3>Schulische Informationen</h3>
-            <form className="formi">
-              <div>
-                <label for="School">Schule:</label>
-                <input
-                  type="text"
-                  value={education.school}
-                  onChange={handleSchoolChange}
-                  id="School"
-                />
-              </div>
-              <div>
-                <label for="Studienfach">Studienfach</label>
-                <input
-                  type="text"
-                  value={education.subject}
-                  onChange={handleSubjectChange}
-                  id="Studienfach"
-                />
-              </div>
-              <div>
-                <label for="Zeitraum">Zeitraum</label>
-                <input
-                  type="text"
-                  value={education.timeframe}
-                  onChange={handleTimeframeChange}
-                  id="Zeitraum"
-                />
-              </div>
-            </form>
-        </div>
+            <EducationInfoForm
+              education={education}
+              handleSchoolChange={handleSchoolChange}
+              handleSubjectChange={handleSubjectChange}
+              handleTimeframeChange={handleTimeframeChange}
+            />
           )}
-      </div>
-      {/* Display full name */}
-      <div class="right">
-      <h2>Persönliches</h2>
-      <p>Name: {fullname}</p>
-      <p>Geburtsdatum: {person.birth}</p>
-      <h2>Schulische Ausbildung</h2>
-      <p>Schule: {education.school}</p>
-      <p>Studienfach: {education.subject}</p>
-      <p>Zeitraum: {education.timeframe}</p>
-      </div>
+        </div>
+        <div className="right">
+          <h2>Persönliches</h2>
+          <p>Name: {fullname}</p>
+          <p>Geburtsdatum: {person.birth}</p>
+          <h2>Schulische Ausbildung</h2>
+          <p>Schule: {education.school}</p>
+          <p>Studienfach: {education.subject}</p>
+          <p>Zeitraum: {education.timeframe}</p>
+        </div>
       </div>
     </>
   );
